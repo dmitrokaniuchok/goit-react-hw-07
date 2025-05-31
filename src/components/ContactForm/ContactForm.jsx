@@ -2,7 +2,6 @@ import css from "./ContactForm.module.css";
 import { MdPerson, MdPhone } from "react-icons/md";
 import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../redux/contactsOps";
 import { selectContacts } from "../../redux/contactsSlice";
@@ -36,7 +35,6 @@ export default function ContactForm() {
     }
 
     const newContact = {
-      id: nanoid(),
       name: values.name,
       number: values.number,
     };
