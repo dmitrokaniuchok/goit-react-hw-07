@@ -1,10 +1,25 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ContactForm from "./components/ContactForm/ContactForm";
 import ContactList from "./components/ContactList/ContactList";
 import SearchBox from "./components/SearchBox/SearchBox";
+import { fetchContacts } from "./redux/contactsOps";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 
+function Loader() {
+  return <p>Loading...</p>;
+}
+
 export default function App() {
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.contacts.loading);
+  const error = useSelector((state) => state.contacts.error);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <div>
       <h1>Phonebook</h1>
@@ -12,7 +27,8 @@ export default function App() {
         <ContactForm />
         <SearchBox />
       </div>
-      <ContactList />
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+      {loading ? <Loader /> : <ContactList />}
       <Toaster position="top-right" />
     </div>
   );
